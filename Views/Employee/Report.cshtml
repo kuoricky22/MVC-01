@@ -1,0 +1,119 @@
+﻿@using MVC_02_公司練習.Models
+
+@model  List<EmployeeModel>
+
+@{
+    ViewBag.Title = "Report";
+}
+
+<div class="container">
+    
+    <div class="row">
+        @* 部門報表 *@
+        <div class="col-md-6">
+            <div class="text-primary" style="font-size: 22px">
+                部門報表
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">項目</th>
+                        <th scope="col">數目</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">部門總人數</th>
+                        <td>@ViewBag.DeptTotal</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">部門分數平均</th>
+                        <td>@ViewBag.DeptSorceAvg</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        @* 單位報表 *@
+        <div class="col-md-6">
+            <div class="text-primary" style="font-size: 22px">
+                單位報表
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">單位</th>
+                        <th scope="col">單位人數</th>
+                        <th scope="col">單位分數平均</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int unitTotal;
+                        int unitScoreSum;
+                        int unitScoreAvg;
+                        foreach (var unit in ViewBag.units)
+                        {
+                            unitTotal = 0;
+                            unitScoreSum = 0;
+                            unitScoreAvg = 0;
+                            foreach (var item in Model)
+                            {
+                                if (item.Unit.Equals(unit))
+                                {
+                                    unitTotal++;
+                                    unitScoreSum += int.Parse(item.Score);
+                                }
+                            }
+                            unitScoreAvg = unitScoreSum / unitTotal;
+                            <tr>
+                                <th scope="row">@unit</th>
+                                <td class="text-center">@unitTotal</td>
+                                <td class="text-center">@unitScoreAvg</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @* 職稱報表 *@
+        <div class="col-md-12" style="border-top:5px solid #808080; margin-top: 10px; padding-top:10px">
+            <div class="text-primary" style="font-size: 22px">
+                職稱報表
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">職稱</th>
+                        <th scope="col">職稱人數</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var times = 0;
+                        foreach (var title in ViewBag.titles)
+                        {
+                            times = 0;
+                            foreach (var item in Model)
+                            {
+                                if (item.Title.Equals(title))
+                                {
+                                    times++;
+                                }
+                            }
+                            <tr>
+                                <th scope="row">@title</th>
+                                <td>@times</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+

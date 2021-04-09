@@ -1,0 +1,33 @@
+﻿@using MVC_02_公司練習.Models
+
+@model  List<EmployeeModel>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<div class="col-md-12">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">員工編號</th>
+                <th scope="col">姓名</th>
+                <th scope="col">細項</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                // 取得多筆資料
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.EmpNo</th>
+                        <td>@item.Name</td>
+                        <td><a href="Detail/@item.EmpNo">連結</a></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
